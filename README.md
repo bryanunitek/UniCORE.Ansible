@@ -1,103 +1,87 @@
-[![PyPI version](https://img.shields.io/pypi/v/ansible-core.svg)](https://pypi.org/project/ansible-core)
-[![Docs badge](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://docs.ansible.com/ansible/latest/)
-[![Chat badge](https://img.shields.io/badge/chat-IRC-brightgreen.svg)](https://docs.ansible.com/ansible/devel/community/communication.html)
-[![Build Status](https://dev.azure.com/ansible/ansible/_apis/build/status/CI?branchName=devel)](https://dev.azure.com/ansible/ansible/_build/latest?definitionId=20&branchName=devel)
-[![Ansible Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-Ansible-silver.svg)](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html)
-[![Ansible mailing lists](https://img.shields.io/badge/mailing%20lists-Ansible-orange.svg)](https://docs.ansible.com/ansible/devel/community/communication.html#mailing-list-information)
-[![Repository License](https://img.shields.io/badge/license-GPL%20v3.0-brightgreen.svg)][copying]
-[![Ansible CII Best Practices certification](https://bestpractices.coreinfrastructure.org/projects/2372/badge)](https://bestpractices.coreinfrastructure.org/projects/2372)
+# UniCORE.Ansible
 
-# Ansible
+**SCAFFOLD-ANCHOR repository — initial scaffold 2026-06-04.**
 
-Ansible is a radically simple IT automation system. It handles
-configuration management, application deployment, cloud provisioning,
-ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex
-changes like zero-downtime rolling updates with load balancers easy. More information on the Ansible [website](https://ansible.com/).
+Full scaffolding, upstream-fork integration, and source-code work all pending a fresh dedicated kickoff arc. This initial commit exists to lock the repository's identity, licence position, and place in the UniCORE Sanity Check fleet so the work cannot be forgotten.
 
-## Design Principles
+Author: **Bryan Fred, Unitek Systems Limited, Bedford, United Kingdom.**
+First commit: **2026-06-04 17:45 UTC.**
 
-* Have an extremely simple setup process with a minimal learning curve.
-* Manage machines quickly and in parallel.
-* Avoid custom-agents and additional open ports, be agentless by
-  leveraging the existing SSH daemon.
-* Describe infrastructure in a language that is both machine and human
-  friendly.
-* Focus on security and easy auditability/review/rewriting of content.
-* Manage new remote machines instantly, without bootstrapping any
-  software.
-* Allow module development in any dynamic language, not just Python.
-* Be usable as non-root.
-* Be the easiest IT automation system to use, ever.
+---
 
-## Use Ansible
+## What this repository is
 
-You can install a released version of Ansible with `pip` or a package manager. See our
-[installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) for details on installing Ansible
-on a variety of platforms.
+`bryanunitek/UniCORE.Ansible` is the **Ansible** family member: On-prem-deployment-shape public gift surface. Documentation today; source code at certification.
 
-Power users and developers can run the `devel` branch, which has the latest
-features and fixes, directly. Although it is reasonably stable, you are more likely to encounter
-breaking changes when running the `devel` branch. We recommend getting involved
-in the Ansible community if you want to run the `devel` branch.
+**Family purpose:** Open-source configuration management — image-build automation for UniCORE.Server / UniCORE.Desktop.
 
-## Communication
+---
 
-Join the Ansible forum to ask questions, get help, and interact with the
-community.
+## Upstream
 
-* [Get Help](https://forum.ansible.com/c/help/6): Find help or share your Ansible knowledge to help others.
-  Use tags to filter and subscribe to posts, such as the following:
-  * Posts tagged with [ansible](https://forum.ansible.com/tag/ansible)
-  * Posts tagged with [ansible-core](https://forum.ansible.com/tag/ansible-core)
-  * Posts tagged with [playbook](https://forum.ansible.com/tag/playbook)
-* [Social Spaces](https://forum.ansible.com/c/chat/4): Meet and interact with fellow enthusiasts.
-* [News & Announcements](https://forum.ansible.com/c/news/5): Track project-wide announcements including social events.
-* [Bullhorn newsletter](https://docs.ansible.com/ansible/devel/community/communication.html#the-bullhorn): Get release announcements and important changes.
+- **Upstream project:** https://github.com/ansible/ansible
+- **Upstream licence:** GPL-3.0
+- **Our relationship:** Fork-and-extend. Upstream codebase is consumed verbatim under its original licence; our additions sit on top under the same copyleft licence (code) and CC BY 4.0 (docs).
 
-For more ways to get in touch, see [Communicating with the Ansible community](https://docs.ansible.com/ansible/devel/community/communication.html).
+The merge discipline that governs how this repository absorbs upstream changes is documented in [`UPSTREAM-MERGE-DISCIPLINE.md`](UPSTREAM-MERGE-DISCIPLINE.md).
 
-## Contribute to Ansible
+---
 
-* Check out the [Contributor's Guide](https://github.com/ansible/ansible/blob/devel/.github/CONTRIBUTING.md).
-* Read [Community Information](https://docs.ansible.com/ansible/devel/community) for all
-  kinds of ways to contribute to and interact with the project,
-  including how to submit bug reports and code to Ansible.
-* Submit a proposed code update through a pull request to the `devel` branch.
-* Talk to us before making larger changes
-  to avoid duplicate efforts. This not only helps everyone
-  know what is going on, but it also helps save time and effort if we decide
-  some changes are needed.
+## Platforms
 
-## Coding Guidelines
+Windows · Linux · macOS · iOS · Android
 
-We document our Coding Guidelines in the [Developer Guide](https://docs.ansible.com/ansible/devel/dev_guide/). We particularly suggest you review:
+---
 
-* [Contributing your module to Ansible](https://docs.ansible.com/ansible/devel/dev_guide/developing_modules_checklist.html)
-* [Conventions, tips, and pitfalls](https://docs.ansible.com/ansible/devel/dev_guide/developing_modules_best_practices.html)
+## Family — the four-repo pattern
 
-## Branch Info
+UniCORE.Ansible is published as a **four-repo family**:
 
-* The `devel` branch corresponds to the release actively under development.
-* The `stable-2.X` branches correspond to stable releases.
-* Create a branch based on `devel` and set up a [dev environment](https://docs.ansible.com/ansible/devel/dev_guide/developing_modules_general.html#common-environment-setup) if you want to open a PR.
-* See the [Ansible release and maintenance](https://docs.ansible.com/ansible/devel/reference_appendices/release_and_maintenance.html) page for information about active branches.
+- `bryanunitek/UniCORE.Ansible` — public on-prem-deployment-shape gift surface ← **this repo**
+- `bryanunitek/UniSaaS.UniCORE.Ansible` — public SaaS-deployment-shape gift surface
+- `bryanunitek/UniCORE.Ansible-Claw` (private) — on-prem-shape working repository
+- `bryanunitek/UniSaaS.UniCORE.Ansible-Claw` (private) — SaaS-shape working repository
 
-## Roadmap
+---
 
-Based on team and community feedback, an initial roadmap will be published for a major or minor version (ex: 2.7, 2.8).
-The [Ansible Roadmap page](https://docs.ansible.com/ansible/devel/roadmap/) details what is planned and how to influence the roadmap.
+## Status
 
-## Authors
+**SCAFFOLD-ANCHOR** as of 2026-06-04. See [`STATUS.md`](STATUS.md) for the full status breakdown.
 
-Ansible was created by [Michael DeHaan](https://github.com/mpdehaan)
-and has contributions from over 5000 users (and growing). Thanks everyone!
+---
 
-[Ansible](https://www.ansible.com) is sponsored by [Red Hat, Inc.](https://www.redhat.com)
+## Files in this scaffold commit
 
-## License
+- [`README.md`](README.md) — this file
+- [`LICENSE.md`](LICENSE.md) — UniCORE additions licence
+- [`STATUS.md`](STATUS.md) — scaffold-anchor status
+- [`UPSTREAM-MERGE-DISCIPLINE.md`](UPSTREAM-MERGE-DISCIPLINE.md) — canonical merge discipline
+- [`AI-AUTHORSHIP.md`](AI-AUTHORSHIP.md) — AI authorship disclosure
 
-GNU General Public License v3.0 or later
+---
 
-See [COPYING] to see the full text.
+## Related repositories — UniCORE programme
 
-[copying]: https://github.com/ansible/ansible/blob/devel/COPYING
+**Foundation triad (gift, public, CC BY 4.0):**
+- [`UniVERSE`](https://github.com/bryanunitek/UniVERSE) — programme
+- [`TrueAI`](https://github.com/bryanunitek/TrueAI) — Foundation (Nine Invariants)
+- [`UniCORE-AI`](https://github.com/bryanunitek/UniCORE-AI) — reference architecture (12 Levels)
+
+**Implementation reference (deployment-shape pair):**
+- [`UniCORE`](https://github.com/bryanunitek/UniCORE) — on-prem-shape
+- [`UniSaaS.UniCORE`](https://github.com/bryanunitek/UniSaaS.UniCORE) — SaaS-shape
+
+**Substrate-services layer (deployment-shape pair):**
+- [`UniCORE.GVB`](https://github.com/bryanunitek/UniCORE.GVB) — on-prem-shape
+- [`UniSaaS.UniCORE.GVB`](https://github.com/bryanunitek/UniSaaS.UniCORE.GVB) — SaaS-shape
+
+---
+
+## Contact
+
+- **Public discussion:** [GitHub Discussions](https://github.com/bryanunitek/UniCORE.Ansible/discussions)
+- **Private contact / connection request:** [LinkedIn — Bryan Fred](https://www.linkedin.com/in/bryan-fred-02209753/)
+
+---
+
+*Author: Bryan Fred, Unitek Systems Limited, Bedford, United Kingdom. Public. Given, not sold. Irrevocable.*
