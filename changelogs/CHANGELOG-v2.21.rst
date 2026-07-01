@@ -4,60 +4,40 @@ ansible-core 2.21 "The Rain Song" Release Notes
 
 .. contents:: Topics
 
-v2.21.0b3
-=========
+v2.21.1
+=======
 
 Release Summary
 ---------------
 
-| Release Date: 2026-04-21
+| Release Date: 2026-06-18
 | `Porting Guide <https://docs.ansible.com/ansible-core/2.21/porting_guides/porting_guide_core_2.21.html>`__
 
-Minor Changes
--------------
+Security Fixes
+--------------
 
-- task results - Python and Powershell modules do not include the ``invocation`` task result key by default. Injection of the ``invocation`` task result key for Python and Powershell modules may be enabled with the var-settable ``INJECT_INVOCATION`` config item. Most callbacks mask ``invocation`` when displaying a task or loop item result.
-- worker process - When controller and forked child workers must share a TTY, the ``WORKER_SESSION_ISOLATION`` config item can be set to ``false`` (via variable/config/envvar) to disable forked worker session isolation.
-
-Deprecated Features
--------------------
-
-- task result - Inferred task failure from a non-zero ``rc`` key and absence of a ``failed`` key will be deprecated in Ansible Core 2.22. Actions and modules must explicitly communicate failure by setting the ``failed`` key, using APIs that do so, or raising an unhandled exception. In future releases, the ``rc`` key will receive no special handling during task result processing.
+- ansible-galaxy install - Ensure role requirements are passed as positional arguments to :command:`git clone`. Previously, a malicious role author could inject arbitrary git configuration in role dependencies. (CVE-2026-11332)
+- psrp - Do not log raw stdout/stderr on verbosity 5 when task has ``no_log: true`` set
+- winrm - Do not log raw stdout/stderr on verbosity 5 when task has ``no_log: true`` set
 
 Bugfixes
 --------
 
-- ansible-test remote alias - Alias values for ``--controller`` and ``--target`` are properly resolved for ``remote``. Previously, remote alias values (e.g. ``fedora/latest``) resolved to the correct name only for the legacy ``--remote`` arg, failing with an unknown image error for the newer args.
-- task results - The ``invocation`` item result key omitted from registered values for looped task results, unless enabled via ``INJECT_INVOCATION``. Previously, it was deleted from registered non-loop results and only available to callbacks.
+- cli - handle empty value for PAGER (https://github.com/ansible/ansible/issues/86898).
+- config - use correct key value for inject_invocation setting (https://github.com/ansible/ansible/issues/86999).
+- free strategy - Fix ``IndexError`` when hosts become unreachable during playbook execution (https://github.com/ansible/ansible/issues/87027).
+- meta pseudo-action - Fixed callback args passed to ``v2_runner_on_skipped`` when any ``meta`` action was skipped by a ``when`` condition; added test coverage. A previous regression caused the callback dispatch to be omitted and a warning issued.
+- module_utils sanitize_keys and remove_value functions now sort their input to ensure matching subsets are always obscured.
+- module_utils/basic.py - Fix ``AnsibleModule.run_command()`` to handle ``None`` return from non-blocking pipe reads (https://github.com/ansible/ansible/issues/86920).
+- wait_for - use ``errno.ENOENT`` symbolic constant instead of hardcoded value for improved code portability.
 
-v2.21.0b2
-=========
-
-Release Summary
----------------
-
-| Release Date: 2026-04-13
-| `Porting Guide <https://docs.ansible.com/ansible-core/2.21/porting_guides/porting_guide_core_2.21.html>`__
-
-Minor Changes
--------------
-
-- ansible-test - Generate ``dist_info`` when running tests.
-- ansible-test - Upgrade the distro-specific test containers.
-
-Bugfixes
---------
-
-- Fix ``validate_argspec`` when tags are defined on the play. The ``always`` tag is only added if the play has no tags.
-- ``--start-at-task`` - fix starting at the requested task instead of starting at the next block or play. Play level tasks run first. (https://github.com/ansible/ansible/issues/86268)
-
-v2.21.0b1
-=========
+v2.21.0
+=======
 
 Release Summary
 ---------------
 
-| Release Date: 2026-04-06
+| Release Date: 2026-05-18
 | `Porting Guide <https://docs.ansible.com/ansible-core/2.21/porting_guides/porting_guide_core_2.21.html>`__
 
 Major Changes
@@ -82,6 +62,7 @@ Minor Changes
 - ansible-test - Add limited RHEL8 integration test remote supporting Python 3.12 only
 - ansible-test - Add support for using the Ansible Core CI service from GitHub Actions.
 - ansible-test - Expand functions covered by the ``unwanted`` rule for the ``pylint`` sanity test. It now includes various ``os.*`` and ``subprocess.*`` subprocess functions in Ansible modules and module_utils.
+- ansible-test - Generate ``dist_info`` when running tests.
 - ansible-test - Optimize DNF configuration for managed remote RHEL instances.
 - ansible-test - Remove ``use-run-command-not-popen`` and ``use-run-command-not-os-call`` error codes from the ``validate-modules`` sanity test. These scenarios are now covered by the ``pylint`` sanity test.
 - ansible-test - Remove pylint check for ``urllib2`` usage.
@@ -103,6 +84,7 @@ Minor Changes
 - ansible-test - Update pypi-test-container.
 - ansible-test - Update sanity test requirements.
 - ansible-test - Update the pylint sanity test to pylint 4.0.2.
+- ansible-test - Upgrade the distro-specific test containers.
 - ansible-test - Use the new API endpoint for the Ansible Core CI service.
 - ansible-test - add ``.winrm`` and ``.networking`` as valid JSON/YAML inventory file extensions. This should not affect any public facing code as it is used internally for inventories generated by ``ansible-test``.
 - ansible-test - update galaxy_ng container to current version deployed to galaxy.ansible.com
@@ -146,7 +128,9 @@ Minor Changes
 - service - add support for GNU Hurd systems, which use SysV init scripts (https://github.com/ansible/ansible/pull/86622).
 - slurp module gets new C(armor) option to allow user to disable base64 encoding.
 - stat - return disk_usage_bytes fact (https://github.com/ansible/ansible/issues/70834).
+- task results - Python and Powershell modules do not include the ``invocation`` task result key by default. Injection of the ``invocation`` task result key for Python and Powershell modules may be enabled with the var-settable ``INJECT_INVOCATION`` config item. Most callbacks mask ``invocation`` when displaying a task or loop item result.
 - to_yaml / to_nice_yaml filters - Add optional ``vault_behavior`` argument to configure how vaulted values are rendered.
+- worker process - When controller and forked child workers must share a TTY, the ``WORKER_SESSION_ISOLATION`` config item can be set to ``false`` (via variable/config/envvar) to disable forked worker session isolation.
 
 Breaking Changes / Porting Guide
 --------------------------------
@@ -164,6 +148,7 @@ Deprecated Features
 - apt_key - deprecate in favor of deb822_repository.
 - apt_repository - deprecate in favor of deb822_repository.
 - connection plugins - Added a soft deprecation on the connection attributes ``has_native_async`` and ``always_pipeline_modules``. Connection plugins that wish to apply custom behaviour around pipelining should instead override the method ``is_pipelining_enabled(self, wrap_async=False)`` added in Ansible 2.19. For backwards compatibility no runtime deprecation warning is emitted but will be in the future.
+- task result - Inferred task failure from a non-zero ``rc`` key and absence of a ``failed`` key will be deprecated in Ansible Core 2.22. Actions and modules must explicitly communicate failure by setting the ``failed`` key, using APIs that do so, or raising an unhandled exception. In future releases, the ``rc`` key will receive no special handling during task result processing.
 
 Removed Features (previously deprecated)
 ----------------------------------------
@@ -183,12 +168,14 @@ Bugfixes
 
 - Fix Windows LIB env var corruption (https://github.com/ansible-collections/ansible.windows/issues/297).
 - Fix ``AnsibleModule.human_to_bytes()``, which was never adjusted after the standalone ``human_to_bytes()`` got a new parameter ``default_unit`` (https://github.com/ansible/ansible/pull/85259).
+- Fix ``validate_argspec`` when tags are defined on the play. The ``always`` tag is only added if the play has no tags.
 - Fix interpreter discovery on delegated ``async`` tasks (https://github.com/ansible/ansible/issues/86491)
 - Fix source metadata validation (https://github.com/ansible/ansible/pull/86320).
 - Fix up ``powershell`` shell commands when using a connection plugin that does not support stdin/pipeline input - https://github.com/ansible/ansible/issues/86397
 - Fix up the Action plugin ``_make_tmp_path`` error to only include the command run rather than the shell's dataclass repr from ``mkdtemp``.
 - Variable loading now uses file source instead of variables when invalidly formmated vars file is loaded.
 - Windows - ignore temporary file cleanup warning when using AnsibleModule to compile C# utils. This should reduce the number of warnings that can safely be ignored when running PowerShell modules - https://github.com/ansible/ansible/issues/85976
+- ``--start-at-task`` - fix starting at the requested task instead of starting at the next block or play. Play level tasks run first. (https://github.com/ansible/ansible/issues/86268)
 - ``ansible-galaxy collection list`` - issue a warning when a collection's namespace and name do not match its filepath. (https://github.com/ansible/ansible/issues/69813)
 - ``ansible-galaxy collection list|install`` - list collections based on reference (the fqcn used to refer to them in a playbook), not based on their documented name. (https://github.com/ansible/ansible/issues/69813)
 - ``ansible-galaxy collection verify`` - fail collection verification when a collection's namespace and name  do not match its filepath. (https://github.com/ansible/ansible/issues/69813)
@@ -207,6 +194,7 @@ Bugfixes
 - ansible-test - The runtime-metadata sanity test now ignores pre-release and build identifiers in collection versions. This prevents errors if a tombstone version is ``X.0.0``, while the collection's version is ``X.0.0-prerelease`` (https://github.com/ansible/ansible/issues/85193)."
 - ansible-test - Upgrade ``expat`` during provisioning of Fedora 42 remote instances.
 - ansible-test - When using the ``env --list-files`` option, non-filename output is now sent to stderr.
+- ansible-test remote alias - Alias values for ``--controller`` and ``--target`` are properly resolved for ``remote``. Previously, remote alias values (e.g. ``fedora/latest``) resolved to the correct name only for the legacy ``--remote`` arg, failing with an unknown image error for the newer args.
 - ansible_facts[os_*] - Contained wrong information, if ClearLinux parsing was tried before falling back to general os-release parsing
 - ansible_local will no longer trigger variable injection default value deprecation.
 - ansible_virtualization_role and ansible_virtualization_type facts - fix the detection of vms running inside FreeBSD Bhyve hypervisor and detection of jails  (https://github.com/ansible/ansible/pull/85767)
@@ -234,6 +222,7 @@ Bugfixes
 - get_url - fix regex for GNU Digest line which is used in comparing checksums (https://github.com/ansible/ansible/issues/86132).
 - getent - handle non-empty string for split parameter value (https://github.com/ansible/ansible/issues/85720).
 - git - Correct the output of git checkmode to a failure when the ``version`` supplied is an invalid ref (https://github.com/ansible/ansible/issues/51580)
+- git - use the branch configured in ``.gitmodules`` or the remote HEAD instead of hardcoding ``master`` when ``track_submodules=yes`` (https://github.com/ansible/ansible/issues/77691).
 - include_role would emit a syntax error on X_from options errors, but a task failure when missing a role to make it consistent now it also emits a task failure on missing tasks_from, which makes it subject to error handling in the play.
 - include_role, would ignore missing X_from files if the subdir (tasks/vars/handlers/defaults) did not exist, now it is a proper error.
 - iptables - The module can now detect when a extensions added with the module ``match`` argument have  been automatically imported by other module arguments such as ``uid_owner`` and prevents duplicate extension imports which previously caused an error (https://github.com/ansible/ansible/issues/84387). 
@@ -251,6 +240,7 @@ Bugfixes
 - rpm_key - Use librpm library API instead of gpg utility to support version 6 PGP keys (https://github.com/ansible/ansible/issues/86157).
 - ssh connection plugin - fix resource leaks when using sshpass
 - task conditionals - An error in any task conditional (e.g., ``when``, ``until``, ``failed_when``) always causes the task to report a descriptive failure while preserving the task result. The resulting task failure is always recoverable via ``ignore_errors``. Previous inconsistent error handling in task conditionals could result in warnings, loss of completed task results, recoverable task errors, unrecoverable task errors, or failure of the Ansible controller process.
+- task results - The ``invocation`` item result key omitted from registered values for looped task results, unless enabled via ``INJECT_INVOCATION``. Previously, it was deleted from registered non-loop results and only available to callbacks.
 - template module - Report the line number for Jinja syntax errors in template files.
 - templating - Fix traceback when using ``deepcopy`` on an imported template (https://github.com/ansible/ansible/issues/86723).
 - to_yaml / to_nice_yaml filters - Restore pre-2.19 decryption behavior for vaulted values (https://github.com/ansible/ansible/issues/85722). A regression in 2.19.0 previously caused vaulted values to be dumped as ``!vault``-tagged ciphertext.
