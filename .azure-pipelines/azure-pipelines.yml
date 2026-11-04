@@ -60,6 +60,7 @@ stages:
             - test: 3.12
             - test: 3.13
             - test: 3.14
+            - test: 3.15
   - stage: Windows
     dependsOn: []
     jobs:
@@ -68,8 +69,6 @@ stages:
           nameFormat: Server {0}
           testFormat: windows/{0}/1
           targets:
-            - name: 2016 WinRM HTTP WinPS
-              test: 2016/winrm/http/5.1
             - name: 2019 WinRM HTTPS WinPS
               test: 2019/winrm/https/5.1
             - name: 2022 WinRM HTTPS WinPS
@@ -96,16 +95,18 @@ stages:
           targets:
             - name: macOS 26.3
               test: macos/26.3
-            - name: RHEL 9.7 py39
-              test: rhel/9.7@3.9
-            - name: RHEL 9.7 py312
-              test: rhel/9.7@3.12
-            - name: RHEL 10.1
-              test: rhel/10.1
-            - name: FreeBSD 14.4
-              test: freebsd/14.4
-            - name: FreeBSD 15.0
-              test: freebsd/15.0
+            - name: RHEL 9.8 py39
+              test: rhel/9.8@3.9
+            - name: RHEL 9.8 py314
+              test: rhel/9.8@3.14
+            - name: RHEL 10.2 py312
+              test: rhel/10.2@3.12
+            - name: RHEL 10.2 py314
+              test: rhel/10.2@3.14
+            - name: FreeBSD 14.5
+              test: freebsd/14.5
+            - name: FreeBSD 15.1
+              test: freebsd/15.1
           groups:
             - 1
             - 2
@@ -114,14 +115,14 @@ stages:
           targets:
             - name: macOS 26.3
               test: macos/26.3
-            - name: RHEL 9.7
-              test: rhel/9.7
-            - name: RHEL 10.1
-              test: rhel/10.1
-            - name: FreeBSD 14.4
-              test: freebsd/14.4
-            - name: FreeBSD 15.0
-              test: freebsd/15.0
+            - name: RHEL 9.8
+              test: rhel/9.8
+            - name: RHEL 10.2
+              test: rhel/10.2
+            - name: FreeBSD 14.5
+              test: freebsd/14.5
+            - name: FreeBSD 15.1
+              test: freebsd/15.1
           groups:
             - 3
             - 4
@@ -129,16 +130,16 @@ stages:
       - template: templates/matrix.yml  # context/controller (ansible-test container management)
         parameters:
           targets:
-            - name: Alpine 3.23
-              test: alpine/3.23
-            - name: Fedora 43
-              test: fedora/43
-            - name: RHEL 9.7
-              test: rhel/9.7
-            - name: RHEL 10.1
-              test: rhel/10.1
-            - name: Ubuntu 24.04
-              test: ubuntu/24.04
+            - name: Alpine 3.24
+              test: alpine/3.24
+            - name: Fedora 44
+              test: fedora/44
+            - name: RHEL 9.8
+              test: rhel/9.8
+            - name: RHEL 10.2
+              test: rhel/10.2
+            - name: Ubuntu 26.04
+              test: ubuntu/26.04
           groups:
             - 6
   - stage: Remote_Targeted
@@ -158,14 +159,14 @@ stages:
         parameters:
           testFormat: linux/{0}
           targets:
-            - name: Alpine 3.23
-              test: alpine323
-            - name: Fedora 43
-              test: fedora43
-            - name: Ubuntu 22.04
-              test: ubuntu2204
+            - name: Alpine 3.24
+              test: alpine324
+            - name: Fedora 44
+              test: fedora44
             - name: Ubuntu 24.04
               test: ubuntu2404
+            - name: Ubuntu 26.04
+              test: ubuntu2604
           groups:
             - 1
             - 2
@@ -173,12 +174,14 @@ stages:
         parameters:
           testFormat: linux/{0}
           targets:
-            - name: Alpine 3.23
-              test: alpine323
-            - name: Fedora 43
-              test: fedora43
+            - name: Alpine 3.24
+              test: alpine324
+            - name: Fedora 44
+              test: fedora44
             - name: Ubuntu 24.04
               test: ubuntu2404
+            - name: Ubuntu 26.04
+              test: ubuntu2604
           groups:
             - 3
             - 4
@@ -187,8 +190,8 @@ stages:
         parameters:
           testFormat: linux/{0}
           targets:
-            - name: Fedora 43
-              test: fedora43
+            - name: Fedora 44
+              test: fedora44
           groups:
             - 7
   - stage: PowerShell
@@ -208,9 +211,9 @@ stages:
           nameFormat: Python {0}
           testFormat: galaxy/{0}/1
           targets:
-            - test: 3.12
             - test: 3.13
             - test: 3.14
+            - test: 3.15
   - stage: Generic
     dependsOn: []
     jobs:
@@ -219,9 +222,9 @@ stages:
           nameFormat: Python {0}
           testFormat: generic/{0}/1
           targets:
-            - test: 3.12
             - test: 3.13
             - test: 3.14
+            - test: 3.15
   - stage: Incidental_Windows
     displayName: Incidental Windows
     dependsOn: []
@@ -231,8 +234,6 @@ stages:
           nameFormat: Server {0}
           testFormat: i/windows/{0}
           targets:
-            - name: 2016 WinRM HTTP WinPS
-              test: 2016/winrm/http/5.1
             - name: 2019 WinRM HTTPS WinPS
               test: 2019/winrm/https/5.1
             - name: 2022 WinRM HTTPS WinPS

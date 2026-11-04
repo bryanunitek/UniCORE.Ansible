@@ -1,5 +1,3 @@
-.claude/commands/review.md pymarkdown!skip  # Claude Code command with YAML frontmatter
-.github/ISSUE_TEMPLATE/internal_issue.md pymarkdown!skip
 lib/ansible/_internal/_wrapt.py black!skip  # vendored code
 lib/ansible/config/base.yml no-unwanted-files
 lib/ansible/keyword_desc.yml no-unwanted-files
@@ -42,6 +40,7 @@ lib/ansible/module_utils/compat/selinux.py import-3.11!skip # pass/fail depends 
 lib/ansible/module_utils/compat/selinux.py import-3.12!skip # pass/fail depends on presence of libselinux.so
 lib/ansible/module_utils/compat/selinux.py import-3.13!skip # pass/fail depends on presence of libselinux.so
 lib/ansible/module_utils/compat/selinux.py import-3.14!skip # pass/fail depends on presence of libselinux.so
+lib/ansible/module_utils/compat/selinux.py import-3.15!skip # pass/fail depends on presence of libselinux.so
 lib/ansible/module_utils/compat/selinux.py pylint:unidiomatic-typecheck
 lib/ansible/module_utils/distro/_distro.py no-assert
 lib/ansible/module_utils/powershell/Ansible.ModuleUtils.ArgvParser.psm1 pslint:PSUseApprovedVerbs
@@ -63,9 +62,9 @@ lib/ansible/plugins/cache/base.py ansible-doc!skip  # not a plugin, but a stub f
 lib/ansible/plugins/callback/__init__.py pylint:arguments-renamed
 lib/ansible/plugins/inventory/advanced_host_list.py pylint:arguments-renamed
 lib/ansible/plugins/inventory/host_list.py pylint:arguments-renamed
-lib/ansible/_internal/_wrapt.py mypy-3.12!skip # vendored code
 lib/ansible/_internal/_wrapt.py mypy-3.13!skip # vendored code
 lib/ansible/_internal/_wrapt.py mypy-3.14!skip # vendored code
+lib/ansible/_internal/_wrapt.py mypy-3.15!skip # vendored code
 lib/ansible/_internal/_wrapt.py pep8!skip # vendored code
 lib/ansible/_internal/_wrapt.py pylint!skip # vendored code
 lib/ansible/_internal/ansible_collections/ansible/_protomatter/README.md no-unwanted-files
@@ -257,6 +256,16 @@ test/units/module_utils/facts/test_facts.py mypy-3.14:assignment
 test/units/modules/mount_facts_data.py mypy-3.14:arg-type
 test/units/modules/test_apt.py mypy-3.14:name-match
 test/units/modules/test_mount_facts.py mypy-3.14:index
+test/units/module_utils/basic/test_exit_json.py mypy-3.15:assignment
+test/units/module_utils/basic/test_exit_json.py mypy-3.15:misc
+test/units/module_utils/facts/other/test_facter.py mypy-3.15:assignment
+test/units/module_utils/facts/other/test_ohai.py mypy-3.15:assignment
+test/units/module_utils/facts/system/test_lsb.py mypy-3.15:assignment
+test/units/module_utils/facts/test_collectors.py mypy-3.15:assignment
+test/units/module_utils/facts/test_facts.py mypy-3.15:assignment
+test/units/modules/mount_facts_data.py mypy-3.15:arg-type
+test/units/modules/test_apt.py mypy-3.15:name-match
+test/units/modules/test_mount_facts.py mypy-3.15:index
 test/integration/targets/interpreter_discovery_python/library/test_non_python_interpreter.py shebang  # test needs non-standard shebang
 test/integration/targets/inventory_script/bad_shebang shebang  # test needs an invalid shebang
 test/integration/targets/ansible-test-sanity-pylint/ansible_collections/ns/col/plugins/lookup/deprecated.py pylint!skip  # validated as a collection
